@@ -56,11 +56,15 @@ print(f"BUILD NUMBER: {build_number}")
 def get_status(name: str, number: int) -> str:
     build_info = server.get_build_info(name=name, number=number)
     job_status = build_info["result"]
+    logtext = server.get_build_console_output(name=name, number=number)
+    print(f"Job output is : {logtext}")
     return job_status
 
 
 while not (status := get_status(job_name, build_number)):
     time.sleep(1)
+    
+    
 
 print(f"Job status is : {status}")
 print(f"::set-output name=job_status::{status}")
